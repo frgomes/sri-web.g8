@@ -1,4 +1,4 @@
-package $packagename$.styles
+package $package$.styles
 
 object Colors {
 

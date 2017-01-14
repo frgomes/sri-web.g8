@@ -1,4 +1,4 @@
-package $packagename$
+package $package$
 
 import org.scalajs.dom
 import sri.web.template.routes.AppRouter
