@@ -1,7 +1,7 @@
 package $package$.styles
 
 
-import $packagename$.components.TopNav
+import $package$.components.TopNav
 import scalacss.Defaults._
 import scalacss.internal.mutable.GlobalRegistry
 
