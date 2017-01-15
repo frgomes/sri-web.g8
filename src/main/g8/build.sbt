@@ -9,8 +9,8 @@ scalaVersion := "2.11.8"
 resolvers += Resolver.bintrayRepo("scalajs-react-universe", "maven")
 
 
-libraryDependencies ++= Seq("scalajs-react-universe" %%% "web" % "2017.1.0",
-"scalajs-react-universe" %%% "vdom" % "2017.1.0",
+libraryDependencies ++= Seq("scalajs-react-universe" %%% "web" % "2017.1.15",
+"scalajs-react-universe" %%% "vdom" % "2017.1.15",
   "scalajs-react-universe" %%% "scalacss" % "2017.1.0")
 
 
