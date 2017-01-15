@@ -1,4 +1,4 @@
-package $package$.styles
+package $package$.components.styles
 
 import scalacss.Defaults._
 

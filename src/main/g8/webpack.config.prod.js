@@ -7,12 +7,14 @@ var webpack = require('webpack'),
 module.exports = _.merge(require('./webpack.config.js'), {
 
     output: {
-        publicPath: "assets/"
+        publicPath: "/assets/"
     },
     plugins: [
-        new CommonsChunkPlugin({
-            name: "mainpage"
-        }),
+         new webpack.DefinePlugin({
+                'process.env': {
+                    'NODE_ENV': JSON.stringify('production'),
+                }
+            })
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.optimize.DedupePlugin(),
         new webpack.optimize.UglifyJsPlugin({

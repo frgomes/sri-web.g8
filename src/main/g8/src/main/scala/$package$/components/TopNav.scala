@@ -1,11 +1,12 @@
-package sri.web.template.components
+package $package$.components
 
 import sri.scalacss.Defaults._
-import sri.web.template.routes.AppRouter.HomePage
-import sri.web.template.styles.Colors
+import $package$.routes.AppRouter.HomePage
+import $package$.components.styles.Colors
 import sri.web.all._
 import sri.web.router.{WebDynamicPage, WebRouterComponent, WebStaticPage}
-import sri.web.vdom.htmltags._
+import sri.web.vdom.DOMProps
+import sri.web.vdom.tags._
 
 import scala.scalajs.js
 import scala.scalajs.js.Dynamic.{literal => json}
@@ -18,21 +19,21 @@ object TopNav {
   @ScalaJSDefined
   class Component extends WebRouterComponent[Unit, Unit] {
     def render() = {
-      div(className = styles.navMenu)(
+      div(new DOMProps {className = styles.navMenu})(
         getStaticItem("Home", HomePage))
     }
 
     def getStaticItem(text: String, page: WebStaticPage, query: js.UndefOr[js.Object] = js.undefined, state: js.UndefOr[js.Object] = js.undefined) = {
       Button(style = styles.menuItem(page == currentRoute.page),
         onPress = () => navigateTo(page, query = query, state = state))(
-          span()(text)
+          span(text)
         )
     }
 
     def getDynamicItem(text: String, page: WebDynamicPage[_], placeholder: String, query: js.UndefOr[js.Object] = js.undefined, state: js.UndefOr[js.Object] = js.undefined) = {
       Button(style = styles.menuItem(page == currentRoute.page),
         onPress = () => navigateToDynamic(page, placeholder = placeholder, query = query, state = state))(
-          span()(text)
+          span(text)
         )
     }
   }

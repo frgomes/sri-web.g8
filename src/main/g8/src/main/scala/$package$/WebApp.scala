@@ -1,8 +1,8 @@
 package $package$
 
 import org.scalajs.dom
-import sri.web.template.routes.AppRouter
-import sri.web.template.styles.AppStyles
+import $package$.routes.AppRouter
+import $package$.components.styles.AppStyles
 import sri.web.ReactDOM
 
 import scala.scalajs.js

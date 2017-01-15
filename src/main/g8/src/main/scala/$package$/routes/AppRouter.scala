@@ -1,12 +1,20 @@
-package sri.web.template.routes
+package $package$.routes
 
 import sri.core.ReactElement
+import sri.core._
 import sri.scalacss.Defaults._
-import sri.web.template.components._
-import sri.web.template.screens.HomeScreen
-import sri.web.template.styles.GlobalStyle
+import $package$.components.styles.GlobalStyle
 import sri.web.router._
-import sri.web.vdom.htmltags._
+import sri.web.vdom.DOMProps
+import sri.web.vdom.tags._
+import org.scalajs.dom
+import $package$.components.TopNav
+import $package$.components.screens.HomeScreen
+
+import scala.scalajs.js
+import scala.scalajs.js.Dynamic.{literal => json}
+import scala.scalajs.js.JSConverters.genTravConvertible2JSRichGenTrav
+
 object AppRouter {
 
   object HomePage extends WebStaticPage
@@ -22,12 +30,15 @@ object AppRouter {
     override val notFound: WebRouteNotFound = WebRouteNotFound(HomePage)
 
     /**
-     * this method is responsible for rendering components ,
-     * @param route current route that is pushed to stack
-     * @return
-     */
+      * this method is responsible for rendering components ,
+      *
+      * @param route current route that is pushed to stack
+      * @return
+      */
     override def renderScene(route: WebRoute): ReactElement = {
-      div(className = GlobalStyle.flexOneAndDirectionVertical)(
+      div(new DOMProps {
+        className = GlobalStyle.flexOneAndDirectionVertical
+      })(
         TopNav(),
         super.renderScene(route)
       )
