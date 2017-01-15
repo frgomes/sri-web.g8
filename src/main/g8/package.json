@@ -9,7 +9,7 @@
   "scripts": {
     "start": "webpack & webpack-dev-server --progress --colors --port 8090 --history-api-fallback",
     "server": "webpack-dev-server --progress --colors --port 8090 --history-api-fallback",
-    "build": "webpack --config webpack.config.prod.js",
+    "build": "webpack --config webpack.config.prod.js"
   },
   "devDependencies": {
     "babel": "5.8.21",
