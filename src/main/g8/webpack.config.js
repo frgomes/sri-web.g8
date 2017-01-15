@@ -22,15 +22,8 @@ module.exports = {
                 'NODE_ENV': JSON.stringify('development'),
             }
         })
-        //new CommonsChunkPlugin({
-        //    name: "mainpage"
-        //})
     ],
-    //resolve: {
-    //    alias: {
-    //        react: path.resolve(__dirname + '/node_modules/react')
-    //    }
-    //},
+ 
     module: {
         loaders: [
 
