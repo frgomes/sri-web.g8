@@ -1,7 +1,7 @@
 
 enablePlugins(ScalaJSPlugin)
 
-name := $name$
+name := "$name$"
 
 scalaVersion := "2.11.8"
 
@@ -40,13 +40,12 @@ val fastOptWeb = Def.taskKey[Unit]("Generate web output file for fastOptJS")
 
 val fullOptWeb = Def.taskKey[Unit]("Generate web output file for fullOptJS")
 
-lazy val fullWebLauncher =
-  Seq(
+
     artifactPath in Compile in fullOptJS :=
-      baseDirectory.value / SJS_OUTPUT_PATH,
+      baseDirectory.value / SJS_OUTPUT_PATH
     fullOptWeb in Compile := {
       (fullOptJS in Compile).value
       val launcher = (scalaJSLauncher in Compile).value.data.content
       IO.write(baseDirectory.value / "assets/scalajs-output-launcher.js", launcher)
     }
-  )
+  
