@@ -35,12 +35,12 @@ module.exports = {
         loaders: [
 
             {
-                test: /\.css$/,
+                test: /\.css\$/,
                 loader: "style-loader!css-loader"
             },
 
             {
-                test: /\.(png|jpg|svg)$/,
+                test: /\.(png|jpg|svg)\$/,
                 loaders: [
                     "url-loader?limit=8192",
                     "image-webpack?optimizationLevel=7&progressive=true"]
