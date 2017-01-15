@@ -12,7 +12,7 @@ sbt ~fullOptWeb //Prod
 
 //open new terminal
 
-npm install
+npm install (or) yarn install
 
 npm start
 
