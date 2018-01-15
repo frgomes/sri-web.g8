@@ -1,51 +1,40 @@
-
 enablePlugins(ScalaJSPlugin)
 
 name := "$name$"
 
-scalaVersion := "2.11.8"
+scalaVersion := "2.12.4"
 
+libraryDependencies ++= Seq(
+  "scalajs-react-interface" %%% "web-bundle" % "2018.1.0-SNAPSHOT"
+)
 
-resolvers += Resolver.bintrayRepo("scalajs-react-universe", "maven")
+scalacOptions ++= Seq(
+  "-deprecation",
+  "-unchecked",
+  "-feature",
+  "-language:postfixOps",
+  "-language:implicitConversions",
+  "-language:higherKinds",
+  "-language:existentials",
+  "-Xmacro-settings:classNameShrink=components"
+)
 
+scalaJSUseMainModuleInitializer := true
 
-libraryDependencies ++= Seq("scalajs-react-universe" %%% "web" % "2017.1.15",
-"scalajs-react-universe" %%% "vdom" % "2017.1.15",
-  "scalajs-react-universe" %%% "scalacss" % "2017.1.0")
+scalaJSUseMainModuleInitializer in Test := true
 
+scalaJSLinkerConfig ~= (_.withModuleKind(ModuleKind.CommonJSModule))
 
-scalacOptions ++= Seq("-deprecation", "-unchecked", "-feature",
-  "-language:postfixOps", "-language:implicitConversions",
-  "-language:higherKinds", "-language:existentials")
-
-
-scalaJSModuleKind := ModuleKind.CommonJSModule
-
-
+resolvers ++= Seq(Resolver.bintrayRepo("scalajs-react-interface", "maven"),
+ Resolver.bintrayRepo("scalajs-css", "maven"),
+ Resolver.bintrayRepo("scalajs-jest", "maven"))
 
 /** Custom tasks to generate launcher file in  CommonJSModule mode   */
-val SJS_OUTPUT_PATH = "assets/scalajs-output.js"
+val SJS_OUTPUT_PATH = "static/scalajs-output.js"
 
+artifactPath in Compile in fastOptJS :=
+  baseDirectory.value / SJS_OUTPUT_PATH
 
-val fastOptWeb = Def.taskKey[Unit]("Generate web output file for fastOptJS")
+artifactPath in Compile in fullOptJS :=
+  baseDirectory.value / SJS_OUTPUT_PATH
 
-
-    artifactPath in Compile in fastOptJS :=
-      baseDirectory.value / SJS_OUTPUT_PATH
-    fastOptWeb in Compile := {
-      val launcher = (scalaJSLauncher in Compile).value.data.content
-      IO.write(baseDirectory.value / "assets/scalajs-output-launcher.js", launcher)
-    }
-
-
-val fullOptWeb = Def.taskKey[Unit]("Generate web output file for fullOptJS")
-
-
-    artifactPath in Compile in fullOptJS :=
-      baseDirectory.value / SJS_OUTPUT_PATH
-    fullOptWeb in Compile := {
-      (fullOptJS in Compile).value
-      val launcher = (scalaJSLauncher in Compile).value.data.content
-      IO.write(baseDirectory.value / "assets/scalajs-output-launcher.js", launcher)
-    }
-  

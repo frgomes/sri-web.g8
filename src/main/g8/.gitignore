@@ -23,7 +23,8 @@ project/plugins/project/
 #mac
 .DS_Store
 
-
+#project
+examples/js/
 
 #node
 
@@ -32,11 +33,6 @@ npm-debug.log
 
 
 #project
-index.ios.js
-index.android.js
-android/.gradle
-android/app/build/
-android/build
-ios/build
-assets/scalajs-output.js
-assets/scalajs-output.js.map
+
+build/
+static/scalajs-output.js

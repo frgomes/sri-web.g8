@@ -1,78 +1,78 @@
 package $package$.components
 
-import sri.scalacss.Defaults._
-import $package$.routes.AppRouter.HomePage
-import $package$.components.styles.Colors
-import sri.web.all._
-import sri.web.router.{WebDynamicPage, WebRouterComponent, WebStaticPage}
-import sri.web.vdom.DOMProps
-import sri.web.vdom.tags._
+import sri.web.router.{RouterAwareComponentNoPS, RouterScreenClass, WithRouter}
+import sri.web.template.components.items.ItemsScreen
+import sri.web.vdom.tagsPrefix_<._
 
-import scala.scalajs.js
-import scala.scalajs.js.Dynamic.{literal => json}
-import scala.scalajs.js.annotation.ScalaJSDefined
-import scala.scalajs.js.{UndefOr => U}
-import scalacss.Defaults._
+import scala.reflect.ClassTag
+import scala.scalajs.js.ConstructorTag
+import scalajscss.{CSSStyleSheet, CSSStyleSheetRegistry}
+
+class TopNav extends RouterAwareComponentNoPS {
+
+  import TopNav._
+
+  CSSStyleSheetRegistry.addToDocument(styles)
+
+  def render() = {
+    <.div(className = styles.topNav)(
+      getStaticMenuItem[HomeScreen]("Home"),
+      getStaticMenuItem[ItemsScreen]("Items", module = true),
+      getStaticMenuItem[AboutScreen]("About")
+    )
+  }
+
+  def getStaticMenuItem[C <: RouterScreenClass { type Params = Null }: ConstructorTag](
+      text: String,
+      module: Boolean = false)(implicit ctag: ClassTag[C]) = {
+    val currentKey = navigation.currentRoute.screenKey.toString
+    val pageKey = sri.web.router.getRouterScreenKey[C].toString
+
+    val isSelected =
+      if (!module) pageKey == currentKey
+      else {
+        (pageKey == currentKey) || (pageKey
+          .split("\\.")
+          .init
+          .mkString(".") == currentKey.split("\\.").init.mkString("."))
+      }
+    <.div(className = if (isSelected) styles.buttonSelected else styles.button,
+          onClick = (e: ReactEventH) => {
+            navigation.navigate[C]()
+          })(text)
+
+  }
+}
 
 object TopNav {
 
-  @ScalaJSDefined
-  class Component extends WebRouterComponent[Unit, Unit] {
-    def render() = {
-      div(new DOMProps {className = styles.navMenu})(
-        getStaticItem("Home", HomePage))
-    }
-
-    def getStaticItem(text: String, page: WebStaticPage, query: js.UndefOr[js.Object] = js.undefined, state: js.UndefOr[js.Object] = js.undefined) = {
-      Button(style = styles.menuItem(page == currentRoute.page),
-        onPress = () => navigateTo(page, query = query, state = state))(
-          span(text)
-        )
-    }
-
-    def getDynamicItem(text: String, page: WebDynamicPage[_], placeholder: String, query: js.UndefOr[js.Object] = js.undefined, state: js.UndefOr[js.Object] = js.undefined) = {
-      Button(style = styles.menuItem(page == currentRoute.page),
-        onPress = () => navigateToDynamic(page, placeholder = placeholder, query = query, state = state))(
-          span(text)
-        )
-    }
-  }
-
-  @ScalaJSDefined
-  class StaticQuery(val sorting: String, val option: js.UndefOr[String] = js.undefined) extends js.Object
-
-
-  object styles extends StyleSheet.Inline {
-
+  object styles extends CSSStyleSheet {
     import dsl._
 
-    val navMenu = style(display.flex,
-      flexDirection.row,
-      alignItems.center,
-      backgroundColor :=! Colors.gold,
-      margin.`0`,
-      height(60.px),
-      paddingLeft(40 px))
+    import scalajscss.units._
 
-    val menuItem = styleF.bool(selected => {
-      styleS(padding(20.px),
-        fontSize :=! "1.5em",
-        cursor.pointer,
-        color :=! c"rgb(244, 233, 233)",
-        marginLeft(10.px),
-        marginRight(10.px),
-        mixinIfElse(selected)(backgroundColor :=! Colors.darkGold,
-          fontWeight._500)(backgroundColor :=! Colors.transparent,
-            fontWeight.normal)
-      )
-    })
+    val topNav =
+      style(display.flex,
+            zIndex := 100,
+            width := 100.%%,
+            paddingLeft := 20.px,
+            position.fixed,
+            alignItems.center,
+            height := 64.px,
+            backgroundColor := "#1976D2")
 
+    val button = style(cursor.pointer,
+                       color.white,
+                       display.flex,
+                       alignItems.center,
+                       fontSize := 18.px,
+                       paddingLeft := 13.px,
+                       paddingRight := 13.px,
+                       height := 64.px,
+                       marginLeft := 20.px)
 
+    val buttonSelected = styleExtend(button)(backgroundColor := "#dc5c1d")
   }
 
-  js.constructorOf[Component].contextTypes = sri.web.router.routerContextTypes
-
-  def apply(ref: js.UndefOr[String] = "", key: js.Any = {}) = makeElement[Component]
-
+  def apply() = WithRouter[TopNav]()
 }
-

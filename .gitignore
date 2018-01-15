@@ -6,3 +6,7 @@ project/plugins/project/
 
 #mac
 .DS_Store
+
+#Intellij
+.idea
+*.iml

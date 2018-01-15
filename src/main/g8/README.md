@@ -1,18 +1,18 @@
 # Sri Web Template
 
-a template project for [Sri](https://github.com/chandu0101/sri) web 
+![Demo](demo.gif)
 
 ## How to Run 
 
 ```scala
 
-sbt ~fastOptWeb //DEV
+sbt ~fastOptJS //DEV
    or
-sbt ~fullOptWeb //Prod   
+sbt ~fullOptJS //Prod   
 
 //open new terminal
 
-npm install (or) yarn install
+yarn install or npm install
 
 npm start
 

@@ -1,22 +1,17 @@
 package $package$
 
 import org.scalajs.dom
-import $package$.routes.AppRouter
-import $package$.components.styles.AppStyles
 import sri.web.ReactDOM
 
-import scala.scalajs.js
-import scala.scalajs.js.JSApp
-import scala.scalajs.js.annotation.{JSExport, ScalaJSDefined}
+import scalajscss.CSSStyleSheetRegistry
 
-object WebApp extends JSApp {
+object WebApp {
 
-
-  @JSExport
-  override def main(): Unit = {
-    AppStyles.load()
-    ReactDOM.render(AppRouter.router, dom.document.getElementById("app"))
+  def main(args: Array[String]): Unit = {
+    ReactDOM.render(
+      components.root,
+      dom.document.getElementById("app")
+    )
   }
 
 }
-
