@@ -5,7 +5,7 @@ name := "$name$"
 scalaVersion := "2.12.4"
 
 libraryDependencies ++= Seq(
-  "scalajs-react-interface" %%% "web-bundle" % "2018.1.0-SNAPSHOT"
+  "scalajs-react-interface" %%% "web-bundle" % "2019.06.26"
 )
 
 scalacOptions ++= Seq(
